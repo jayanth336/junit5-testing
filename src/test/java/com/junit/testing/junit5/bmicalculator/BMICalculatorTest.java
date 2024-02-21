@@ -3,6 +3,10 @@ package com.junit.testing.junit5.bmicalculator;
 import com.junit.testing.junit5.domain.Coder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,5 +108,44 @@ class BMICalculatorTest {
         double[] bmiScore = BMICalculator.getBMIScores(coderList);
         //then
         assertArrayEquals(expected, bmiScore);
+    }
+
+    /**
+     * Parameterized test
+     */
+    @ParameterizedTest
+    @ValueSource(doubles = {89.0,95.0,110.0})
+    void should_ReturnTrue_when_DietRecommended_using_parameterizedTest(Double coderWeight) {
+        //given
+        double weight = coderWeight;
+        double height = 1.72;
+        //when
+        boolean recommended = BMICalculator.isDietRecommended(weight, height);
+        //then
+        assertTrue(recommended);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"89.0,1.72", "95.0,1.75", "110.0,1.78"})
+    void should_ReturnTrue_when_DietRecommended_using_parameterizedTest2(Double coderWeight, Double coderHeight) {
+        //given
+        double weight = coderWeight;
+        double height = coderHeight;
+        //when
+        boolean recommended = BMICalculator.isDietRecommended(weight, height);
+        //then
+        assertTrue(recommended);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/diet-recommended-input-data.csv", numLinesToSkip = 1)
+    void  should_ReturnTrue_when_DietRecommended_using_parameterizedTest3(Double coderWeight, Double coderHeight) {
+        //given
+        double weight = coderWeight;
+        double height = coderHeight;
+        //when
+        boolean recommended = BMICalculator.isDietRecommended(weight, height);
+        //then
+        assertTrue(recommended);
     }
 }
