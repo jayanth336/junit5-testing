@@ -3,7 +3,9 @@ package com.junit.testing.junit5.dietplanner;
 import com.junit.testing.junit5.domain.Coder;
 import com.junit.testing.junit5.domain.DietPlan;
 import com.junit.testing.junit5.domain.Gender;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,6 +28,17 @@ class DietPlannerTest {
     void afterEach() {
         System.out.println("Unit test is finished");
     }
+
+    @BeforeAll
+    static void beforeAll() {
+        System.out.println("Before executing all testcases");
+    }
+
+    @AfterAll
+    static void afterAll() {
+        System.out.println("After executing all testcases");
+    }
+
 
     //Test calculateDiet method
     @Test()
